@@ -94,12 +94,12 @@ const data = [
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
 
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
-
-    {three separate paragraph elements}
-
+  <div class="article">                         article
+    <h2>{title of the article}</h2>             titleArt
+    <p class="date">{date of the article}</p>   dateArt
+                                                first
+    {three separate paragraph elements}         second
+                                                third
     <span class="expandButton">+</span>
   </div>
 
@@ -114,3 +114,60 @@ const data = [
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
+ const newArticle = (obj) =>{
+   data.push({
+     title: obj.title,
+     date: obj.date,
+     firstParagraph: obj.firstParagraph,
+     secondParagraph: obj.secondParagraph,
+     thirdParagraph: obj.thirdParagraph
+   });
+ };
+newArticle({title: "karla", date: "Feb. 19th 1996", firstParagraph: "first", secondParagraph: "second", thirdParagraph: "third"});
+function articleMaker (data){
+   const article = document.createElement("div");
+   const artTitle = document.createElement("h2");
+   const artDate = document.createElement("p");
+   const artFirst = document.createElement("p");
+   const artSec = document.createElement("p");
+   const artThird = document.createElement("p");
+   const button = document.createElement("span");
+
+   article.appendChild(artTitle);
+   article.appendChild(artDate);
+   article.appendChild(artFirst);
+   article.appendChild(artSec);
+   article.appendChild(artThird);
+   article.appendChild(button);
+
+   article.classList.add("article");
+   artDate.classList.add("date");
+   button.classList.add("expandButton");
+
+   artTitle.textContent = data.title;
+    artDate.textContent = data.date;
+    artFirst.textContent = data.firstParagraph;
+    artSec.textContent = data.secondParagraph;
+    artThird.textContent = data.thirdParagraph; 
+    button.textContent = "+";
+   
+   button.addEventListener("click", (event) =>{
+     article.classList.toggle("article-open")
+   });
+
+return article;
+ }
+const articles = document.querySelector(".articles");
+
+const articleLoop = data.map((data) =>{
+   return articleMaker(data);
+ });
+
+ articleLoop.forEach((data) => {
+   articles.appendChild(data);
+ });
+
+
+
+// console.log(articleMaker(data));
+
